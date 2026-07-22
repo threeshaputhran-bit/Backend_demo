@@ -1,5 +1,5 @@
 import express from "express";
-import {connectDB} from "./dbConnection.js";
+import {connectDB} from "./src/helper/dbConnection.js";
 import dotenv from "dotenv";
 import routes from "./routers.js"
 

@@ -2,16 +2,15 @@ import { Router } from "express";
 const router =Router();
 
 import StudentModel from "../../Model/StudentModel.js";
-
+import RESPONSE from "../../config/global.js";
+import { send, setErrMsg } from "../../helper/responseHelper.js";
 export default router.post("/",async(req,res)=>{
     try{
         let {name,rollnumber,email,phone}=req.body || {};
-        if(!name){
-            return res.status(400).json({
-                success:false,
-                message:"name is required",
-            });
-        }
+        if (!name) {
+            return send(res, setErrMsg(RESPONSE.REQUIRED, "Name "));
+            }
+
         if(!rollnumber){
             return res.status(400).json({
                 success:false,
@@ -35,18 +34,14 @@ export default router.post("/",async(req,res)=>{
             rollnumber:rollnumber,
             email:email,
             phone:phone,
-        })
-
-        return res.status(200).json({
-            success:true,
-            message:"student created scuccsfully",
         });
 
+        
+
+    return send(res,RESPONSE.SUCCESS,student);
     }catch(error) {
         console.log("create student:",error);
-        return res.status(500).json({
-            success:false,
-            message:"smthg went worng",
-        });
+        return send(res,RESPONSE.UNK_ERR);
+ 
     }
 });

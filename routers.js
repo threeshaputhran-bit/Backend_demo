@@ -1,6 +1,6 @@
-import facultyApiHandler from "./src/Controller/managefaculty/apiHepers.js";
+import studentApiHandler from "./src/Controller/managestudents/apiHelper.js";
 const routes =(app)=>{
-    app.use("/api/faculty",facultyApiHandler);
+    app.use("/api/student",studentApiHandler);
 
 };
 export default routes;
