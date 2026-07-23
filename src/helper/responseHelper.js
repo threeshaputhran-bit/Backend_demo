@@ -1,16 +1,14 @@
-export const send =(res,response,data={})=>{
+export const send = (res, response, data = {}) => {
     return res.send({
-        responseCode:response.code,
-        responseMessage:response.statusMessage,
-        responseData:data,
-
+        responseCode: response.code,
+        responseMessage: response.message || response.statusMessage,
+        responseData: data,
     });
 };
 
-export const setErrMsg =(response,param)=>{
+export const setErrMsg = (response, param) => {
     return {
-        code:response.code,
-        message:`${param}${response.message}`,
-
+        code: response.code,
+        message: `${param}${response.message}`,
     };
 };

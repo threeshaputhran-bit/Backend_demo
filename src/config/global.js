@@ -22,6 +22,17 @@ const RESPONSE = {
         statusMessage: "Failed",
         message: "Something went wrong",
     },
+    INVALID: {
+        code: 300,
+        statusMessage: "Failed",
+        message: " is Invalid",
+    },
+
+    ALREADY_EXISTS: {
+        code: 700,
+        statusMessage: "Failed",
+        message: " is alrdy exists",
+    },
 };
 
 export default RESPONSE;
