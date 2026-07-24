@@ -21,6 +21,10 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  image: {
+    type:String,
+    required:false,
+  },
   isActive: {
     type: Number,
     default: 1,

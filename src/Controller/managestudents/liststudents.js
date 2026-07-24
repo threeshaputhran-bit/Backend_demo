@@ -27,7 +27,7 @@ export default router.get("/", async (req, res) => {
             };
         }
 
-        const studentData = await StudentModel.find(query, {
+        let studentData = await StudentModel.find(query, {
             __v: 0,
             isActive: 0
         });
@@ -35,15 +35,16 @@ export default router.get("/", async (req, res) => {
         if (!studentData.length) {
             return send(res, setErrMsg(RESPONSE.NOT_FOUND, "Student Data "));
         }
+        studentData =studentData.map((item)=>{
+            return{
+                ...item.toJSON(),
+                image:item.image ? "/uploads/" + item.image :null,
+            };
+        });
 
         return send(res, RESPONSE.SUCCESS, studentData);
-
     } catch (error) {
-
         console.log(error);
-
         return send(res, RESPONSE.UNK_ERR);
-
     }
-
 });

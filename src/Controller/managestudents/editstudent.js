@@ -2,11 +2,17 @@ import { Router } from "express";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
 import RESPONSE from "../../config/global.js";
 import studentModel from "../../model/studentModel.js";
+import { upload } from "../../middleware/uploads.js";
+const uploads =upload.single("image");
 
 let router = Router();
 
 export default router.put("/", async (req, res) => {
   try {
+    uploads(req,res,async(err)=>{
+      if(err){
+        return send(res, setErrMsg(RESPONSE.MULTER_ERR, err));
+      }
     let { student_id } = req.query;
     let { name, rollnumber, email, phone } = req.body || {};
 
@@ -16,6 +22,13 @@ export default router.put("/", async (req, res) => {
 
     let updates = {};
 
+    if (!req.file){
+      return send(res,setErrMsg(RESPONSE.REQUIRED,"image"));
+    }
+    if (req.file || req != undefined){
+      let filename=req.file.filename;
+      updates.image=filename;
+    }
     if (name) {
       updates.name = name;
     }
@@ -65,7 +78,8 @@ export default router.put("/", async (req, res) => {
         
     );
     return send(res,RESPONSE.SUCCESS);
-    }catch(error){
+  });
+  }catch(error){
     console.log("Edit Api",error);
     return send(res,RESPONSE.UNK_ERR);
    }

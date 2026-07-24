@@ -19,9 +19,9 @@ export default router.delete("/",async(req,res)=>{
         });
 
         if(studentData){
-            await studentModel.deleteOne({
-                _id:student_id,
-            });
+            // await studentModel.deleteOne({
+            //     _id:student_id,
+            // });
 
             await studentModel.updateOne({
                 _id:student_id

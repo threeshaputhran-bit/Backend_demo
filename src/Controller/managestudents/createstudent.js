@@ -1,11 +1,29 @@
 import { Router } from "express";
-const router =Router();
+
 
 import StudentModel from "../../Model/StudentModel.js";
 import RESPONSE from "../../config/global.js";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
+import { upload } from "../../middleware/uploads.js";
+const uploads =upload.single("image");
+
+const router =Router();
+
+
 export default router.post("/",async(req,res)=>{
     try{
+      uploads(req,res,async (err)=>{
+        if(err){
+            return send(res,setErrMsg(RESPONSE.MULTER_ERR,err));
+        }
+        if(!req.file){
+            return send(res,setErrMsg(RESPONSE.REQUIRED,"image"));
+        }
+
+        let filename =req.file.filename;
+
+        let studentModel =await StudentModel(); 
+        
         let {name,rollnumber,email,phone}=req.body || {};
         if (!name) {
             return send(res, setErrMsg(RESPONSE.REQUIRED, "Name "));
@@ -47,19 +65,21 @@ export default router.post("/",async(req,res)=>{
 
 
 
-        let student=await StudentModel.create({
+        await StudentModel.create({
             name:name,
             rollnumber:rollnumber,
             email:email,
             phone:phone,
+            image:filename,
         });
+
+        return send(res,RESPONSE.SUCCESS);
+    });
+}catch(error){
+    console.log("create studnet:",error);
+    return send(res,RESPONSE.UNK_ERR);
+}
+});
 
         
 
-    return send(res,RESPONSE.SUCCESS,student);
-    }catch(error) {
-        console.log("create student:",error);
-        return send(res,RESPONSE.UNK_ERR);
- 
-    }
-});

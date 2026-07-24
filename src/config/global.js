@@ -33,6 +33,11 @@ const RESPONSE = {
         statusMessage: "Failed",
         message: " is alrdy exists",
     },
+    MULTER_ERR: {
+        code: 800,
+        statusMessage: "Failed",
+        message: "",
+    },
 };
 
 export default RESPONSE;
