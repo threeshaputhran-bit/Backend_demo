@@ -34,9 +34,14 @@ const RESPONSE = {
         message: " is alrdy exists",
     },
     MULTER_ERR: {
-        code: 800,
+        code: 100,
         statusMessage: "Failed",
         message: "",
+    },
+    ACCESS_DENIED: {
+        code: 900,
+        statusMessage: "Failed",
+        message: "Access Denied",
     },
 };
 

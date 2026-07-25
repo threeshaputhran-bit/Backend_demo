@@ -5,12 +5,13 @@ import StudentModel from "../../Model/StudentModel.js";
 import RESPONSE from "../../config/global.js";
 import { send, setErrMsg } from "../../helper/responseHelper.js";
 import { upload } from "../../middleware/uploads.js";
+import { authenticate } from "../../middleware/authenticate.js";
 const uploads =upload.single("image");
 
 const router =Router();
 
 
-export default router.post("/",async(req,res)=>{
+export default router.post("/",authenticate,async(req,res)=>{
     try{
       uploads(req,res,async (err)=>{
         if(err){
